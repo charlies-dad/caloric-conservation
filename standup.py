@@ -3,17 +3,21 @@ import logging
 import klembord
 
 color_dict = {
-	"Track": "black",
-	"Specify": "black",
-	"Specify Done": "#BDCB4C",
-	"Implement": "#2B9B62",
-	"Implement Done": "#37797B", 
-	"Review": "#FDC030",
-	"Review Done": "#CD5937",
-	"Ready to validate" : "#B6424C",
-	"Validate" : "#B6424C",
-	"Validate Done" : "#1E53A3",
-	"Done" : "#A5397A"
+	"track": "black",
+	"investigate": "black",
+	"specify": "black",
+	"specify done": "#BDCB4C",
+	"specification review": "#BDCB4C",
+	"ready to implement": "#BDCB4C",
+	"implement": "#2B9B62",
+	"ready to review": "#37797B", 
+	"review": "#FDC030",
+	"ready to validate" : "#B6424C",
+	"validate" : "#B6424C",
+	"validate Done" : "#1E53A3",
+	"staging wip" : "#CD5937",
+	"staging done" : "#CD5937",
+	"done" : "#A5397A"
 }
 
 def connect_jira(log, jira_server, jira_user, api_token):
@@ -27,7 +31,7 @@ def connect_jira(log, jira_server, jira_user, api_token):
         return None
 
 def write_task(i):
-	return '<b>' + i.key + ' </b> ' + i.fields.summary + ' : <span style="color: ' + color_dict[i.fields.status.name] + '">' + ("<u><b><i>" + i.fields.status.name + "</i></b></u>" if i.fields.status.name == "Done" else i.fields.status.name) + '</span><br/>\n'
+	return '<b>' + i.key + ' </b> ' + i.fields.summary + ' : <span style="color: ' + color_dict[i.fields.status.name.lower()] + '">' + ("<u><b><i>" + i.fields.status.name + "</i></b></u>" if i.fields.status.name == "Done" else i.fields.status.name) + '</span><br/>\n'
 
 
 ###
