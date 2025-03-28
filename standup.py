@@ -10,6 +10,7 @@ color_dict = {
 	"Implement Done": "#37797B", 
 	"Review": "#FDC030",
 	"Review Done": "#CD5937",
+	"Ready to validate" : "#B6424C",
 	"Validate" : "#B6424C",
 	"Validate Done" : "#1E53A3",
 	"Done" : "#A5397A"
@@ -33,15 +34,14 @@ def write_task(i):
 email = ""
 api_token = ""
 assignee_code = ""
-atlassian = ""
 exclude_track = True
 ###
 
 standup = "<html>"
 log = logging.getLogger(__name__)
-jira = connect_jira(log, atlassian, email, api_token)
+jira = connect_jira(log, "https://fnba.atlassian.net/", email, api_token)
 
-issues_in_proj = jira.search_issues("assignee = " + assignee_code + " AND statusCategory != Done AND project = SD")
+issues_in_proj = jira.search_issues("assignee = " + assignee_code + " AND statusCategory != Done AND project = SD AND status != Backlog")
 
 if(exclude_track):
 	for i in issues_in_proj:
@@ -51,7 +51,7 @@ else:
 	for i in issues_in_proj:
 		standup+= write_task(i)
 
-issues_in_proj = jira.search_issues("project = SD AND assignee = " + assignee_code + " AND updateddate >= -2d AND status = DONE")
+issues_in_proj = jira.search_issues("project = SD AND assignee = " + assignee_code + " AND updateddate >= -2d AND status = DONE AND status != Backlog")
 
 for i in issues_in_proj:
 	if(i.fields.status.name != "Track"):
@@ -59,6 +59,7 @@ for i in issues_in_proj:
 
 standup = standup[0:len(standup) -1]
 standup+= "</html>"
+print(standup)
 klembord.set_with_rich_text('html', standup)
-print("Your standup has been copied to your clipboard.")
+print("Your standup has been copied to your clipboard")
 
