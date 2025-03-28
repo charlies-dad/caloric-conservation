@@ -33,12 +33,13 @@ def write_task(i):
 email = ""
 api_token = ""
 assignee_code = ""
+atlassian = ""
 exclude_track = True
 ###
 
 standup = "<html>"
 log = logging.getLogger(__name__)
-jira = connect_jira(log, "https://fnba.atlassian.net/", email, api_token)
+jira = connect_jira(log, atlassian, email, api_token)
 
 issues_in_proj = jira.search_issues("assignee = " + assignee_code + " AND statusCategory != Done AND project = SD")
 
