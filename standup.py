@@ -71,7 +71,7 @@ klembord.set_with_rich_text('html', standup)
 print("Your standup has been copied to your clipboard")
 
 
-data_json = {'standup': [standup]}
+data_json = {'standup': standup}
 
 response_json = requests.post(url, json=data_json)
 
