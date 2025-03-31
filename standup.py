@@ -1,11 +1,12 @@
 from jira.client import JIRA
 import logging
 import klembord
+import requests
 
 color_dict = {
 	"track": "black",
-	"investigate": "black",
-	"specify": "black",
+	"investigate": "",
+	"specify": "",
 	"specify done": "#BDCB4C",
 	"specification review": "#BDCB4C",
 	"ready to implement": "#BDCB4C",
@@ -39,6 +40,8 @@ email = ""
 api_token = ""
 assignee_code = ""
 exclude_track = True
+
+url = ''
 ###
 
 standup = "<html>"
@@ -55,15 +58,21 @@ else:
 	for i in issues_in_proj:
 		standup+= write_task(i)
 
-issues_in_proj = jira.search_issues("project = SD AND assignee = " + assignee_code + " AND updateddate >= -2d AND status = DONE AND status != Backlog")
+issues_in_proj = jira.search_issues('project = SD AND assignee = " + assignee_code + " AND updateddate >= -2d AND status CHANGED TO "Done" AFTER -2d AND status != Backlog')
 
 for i in issues_in_proj:
 	if(i.fields.status.name != "Track"):
 		standup+= write_task(i)
 
-standup = standup[0:len(standup) -1]
+standup = standup[0:len(standup) -3]
 standup+= "</html>"
 print(standup)
 klembord.set_with_rich_text('html', standup)
 print("Your standup has been copied to your clipboard")
 
+
+data_json = {'standup': [standup]}
+
+response_json = requests.post(url, json=data_json)
+
+print(response_json)
