@@ -1,0 +1,1 @@
+plaid = "<strong style=\"color: rgb(205, 89, 55);\"><em><u>P</u></em></strong><strong style=\"color: rgb(43, 155, 98);\"><em><u>l</u></em></strong><strong style=\"color: rgb(182, 66, 76);\"><em><u>a</u></em></strong><strong style=\"color: rgb(30, 83, 163);\"><em><u>i</u></em></strong><strong style=\"color: rgb(253, 192, 48);\"><em><u>d:</u></em></strong>"
